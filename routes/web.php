@@ -9,13 +9,13 @@ use App\Http\Controllers\SubuserController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-// Route::get('/', function() { 
-//     return view('login'); 
-// });
-// Public
-Route::get('/', function () {
-    return view('home');
+Route::get('/', function() { 
+    return view('login'); 
 });
+// Public
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 // Auth
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
