@@ -17,11 +17,33 @@ class Newuser extends Authenticatable implements MustVerifyEmail
         'secondname',
         'email',
         'password', 
-        'email_verified_at'
+        'role',
+        'is_active',
+        'organization_id'
     ];
 
      protected $hidden = [
         'password',
-        'remember_token',
+        
     ];
+
+    public function isSuperuser():bool
+    {
+         return $this->role === 'superuser';
+    }
+
+    public function isSubuser():bool
+    {
+        return $this->role == 'subuser';
+    }
+
+    public function organization()
+    {
+        return $this->belongsTo(Newuser::class, 'organization_id');
+    }
+
+    public function subusers()
+    {
+        return $this->hasMany(Newuser::class, 'organization_id');
+    }
 }
