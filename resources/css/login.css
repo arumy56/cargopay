@@ -1,0 +1,112 @@
+:root {
+    --kargo-blue: #0864ad;
+    --kargo-blue-dark: #062947;
+    --ink: #172b43;
+    --muted: #657488;
+}
+
+* { box-sizing: border-box; }
+
+body.login-page {
+    margin: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: #fff;
+}
+
+.login-layout { min-height: 100svh; display: grid; grid-template-columns: minmax(0, 42%) minmax(0, 58%); }
+
+.login-form-panel { display: grid; place-items: center; min-width: 0; padding: clamp(2rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 4rem); background: #fff; }
+.login-form-wrap { width: min(100%, 538px); }
+
+.brand-mark { display: grid; place-items: center; width: 82px; height: 82px; margin: 0 auto 2rem; }
+.brand-mark img { width: 82px; height: 82px; object-fit: contain; border-radius: 50%; }
+
+.eyebrow, .hero-eyebrow { margin: 0; color: #377df0; font-size: .91rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.login-form-wrap > .eyebrow, .login-form-wrap > h1, .intro { text-align: center; }
+.login-form-wrap h1 { margin: .75rem 0 .7rem; color: #172a42; font-size: clamp(2rem, 2.6vw, 2.62rem); font-weight: 800; letter-spacing: -.045em; line-height: 1.1; }
+.intro { margin: 0 0 4.75rem; color: var(--muted); font-size: 1.18rem; }
+
+.login-form { display: grid; gap: 1.55rem; }
+.field-group { display: grid; gap: .58rem; }
+.field-group label { color: #293d56; font-size: .94rem; font-weight: 600; }
+.field-label-row { display: flex; justify-content: space-between; align-items: baseline; }
+.field-label-row a, .register-prompt a { color: #347af0; font-weight: 700; text-decoration: none; }
+.field-label-row a { font-size: .92rem; }
+.field-label-row a:hover, .register-prompt a:hover { text-decoration: underline; }
+
+.input-wrap { display: flex; align-items: center; gap: .9rem; height: 72px; padding: 0 1.35rem; border: 1px solid #dce4f0; border-radius: 18px; background: #f7f9fc; box-shadow: 0 1px 2px rgb(22 47 82 / 4%); transition: border-color .2s, box-shadow .2s; }
+.input-wrap:focus-within { border-color: #6ba5f6; background: #fff; box-shadow: 0 0 0 4px rgb(52 122 240 / 12%); }
+.input-wrap svg { width: 21px; height: 21px; fill: none; stroke: #91a4c3; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; flex: none; }
+.input-wrap input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 1.17rem; }
+.input-wrap input::placeholder { color: #728196; opacity: 1; }
+
+.submit-row { display: flex; justify-content: flex-end; margin-top: .55rem; }
+.submit-row button { display: inline-flex; align-items: center; gap: 1rem; min-height: 52px; padding: 0 1.55rem; border: 0; border-radius: 13px; color: #fff; background: linear-gradient(135deg, #0871c5, #005599); box-shadow: 0 8px 18px rgb(0 80 154 / 20%); cursor: pointer; font-size: 1rem; font-weight: 800; text-transform: uppercase; transition: transform .2s, box-shadow .2s; }
+.submit-row button:hover { transform: translateY(-2px); box-shadow: 0 11px 20px rgb(0 80 154 / 27%); }
+.submit-row button span { font-size: 1.7rem; line-height: 0; }
+.register-prompt { margin: 2.4rem 0 0; text-align: center; color: #657488; font-size: 1rem; font-weight: 600; }
+.login-alert { margin: -2rem 0 2rem; padding: .8rem 1rem; border: 1px solid #f3b8b8; border-radius: 10px; color: #9a2626; background: #fff5f5; font-size: .9rem; }
+
+.hero-panel { position: relative; overflow: hidden; display: flex; align-items: flex-end; min-width: 0; min-height: 100svh; padding: clamp(2rem, 6vw, 8.5rem); color: #fff; background: #062947; }
+.hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .5; }
+.hero-panel::after { position: absolute; inset: 0; content: ""; background: linear-gradient(115deg, rgb(4 30 59 / 74%), rgb(4 65 111 / 62%)), linear-gradient(0deg, rgb(1 19 45 / 45%), transparent 55%); pointer-events: none; }
+.live-status { position: absolute; top: 2rem; right: 2.5rem; z-index: 1; display: flex; align-items: center; gap: .55rem; padding: .55rem 1.1rem; border: 1px solid rgb(255 255 255 / 24%); border-radius: 999px; background: rgb(255 255 255 / 11%); color: rgb(255 255 255 / 90%); font-size: .87rem; font-weight: 600; }
+.live-status span { width: 9px; height: 9px; border-radius: 50%; background: #4086ff; box-shadow: 0 0 10px #4086ff; }
+.hero-copy { position: relative; z-index: 1; max-width: 720px; }
+.hero-eyebrow { margin-bottom: 1.2rem; color: #a2c8ff; font-size: .78rem; }
+.hero-copy h2 { margin: 0; font-size: clamp(2.8rem, 4.25vw, 4.65rem); font-weight: 800; letter-spacing: -.055em; line-height: 1.1; }
+.hero-copy em { color: #6ea3ff; font-style: normal; font-weight: 500; }
+
+@media (max-width: 1100px) {
+    .login-layout { grid-template-columns: minmax(0, 48%) minmax(0, 52%); }
+    .brand-mark, .brand-mark img { width: 72px; height: 72px; }
+    .brand-mark { margin-bottom: 1.5rem; }
+    .intro { font-size: 1.05rem; }
+    .hero-copy h2 { font-size: clamp(2.35rem, 5vw, 3.5rem); }
+    .live-status { top: 1.5rem; right: 1.5rem; }
+}
+
+@media (max-width: 860px) {
+    .login-layout { display: flex; flex-direction: column; }
+    .login-form-panel { min-height: auto; padding-block: clamp(2.5rem, 8vw, 4rem); }
+    .login-form-wrap { max-width: 560px; }
+    .hero-panel { min-height: clamp(280px, 48vw, 390px); padding: clamp(2rem, 7vw, 4rem); }
+    .hero-image { object-position: center 58%; }
+    .hero-copy { max-width: 620px; }
+    .hero-copy h2 { font-size: clamp(2rem, 6vw, 3.35rem); }
+    .live-status { top: 1.25rem; right: 1.25rem; }
+}
+
+@media (max-width: 560px) {
+    .login-form-panel { padding: 2.5rem 1.25rem 3rem; }
+    .brand-mark, .brand-mark img { width: 68px; height: 68px; }
+    .login-form-wrap h1 { font-size: 2rem; }
+    .intro { margin-bottom: 3.5rem; }
+    .field-label-row { gap: .75rem; }
+    .field-label-row a { white-space: nowrap; }
+    .input-wrap { height: 64px; padding-inline: 1rem; border-radius: 15px; }
+    .input-wrap input { font-size: 1rem; }
+    .hero-panel { min-height: 320px; padding: 2rem 1.25rem; }
+    .hero-copy h2 { font-size: clamp(2rem, 10vw, 2.7rem); }
+    .live-status { top: 1rem; right: 1rem; padding: .45rem .75rem; font-size: .75rem; }
+}
+
+@media (max-width: 380px) {
+    .login-form-panel { padding-inline: 1rem; }
+    .intro { margin-bottom: 2.5rem; font-size: .95rem; }
+    .field-label-row { align-items: flex-start; flex-direction: column; gap: .25rem; }
+    .submit-row { justify-content: stretch; }
+    .submit-row button { justify-content: center; width: 100%; }
+    .hero-panel { min-height: 285px; }
+}
+
+@media (max-height: 700px) and (min-width: 861px) {
+    .login-form-panel { padding-block: 2rem; }
+    .brand-mark, .brand-mark img { width: 62px; height: 62px; }
+    .brand-mark { margin-bottom: 1rem; }
+    .intro { margin-bottom: 2rem; }
+    .login-form { gap: 1rem; }
+    .input-wrap { height: 60px; }
+    .register-prompt { margin-top: 1.5rem; }
+}

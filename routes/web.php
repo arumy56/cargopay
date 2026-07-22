@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', function(){
-    return view('home');
-});
+// Route::get('/', function() { 
+//     return view('login'); 
+// });
 
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
-Route::get('/login', [LogController::class, 'showLoginForm'])->name('login');
+Route::get('/', [LogController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LogController::class, 'login']);
 
 Route::get('/email/verify', function () {
