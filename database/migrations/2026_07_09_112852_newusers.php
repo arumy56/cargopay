@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable(); 
             $table->string('password');
+            $table->string('role')->default('subuser');
+            $table->boolean('is_active')->default('false');
+            $table->foreignId('organization_id')->nullable()->constrained('newusers');
             $table->timestamps();
 
         });

@@ -31,7 +31,12 @@ class AuthController extends Controller
 
         $validated['password']=Hash::make($validated['password']);
 
-        $user=Newuser::create($validated);
+        $user=Newuser::create(array_merge($validated, [
+            'role'=>'superuser',
+            'is_active'=>true,
+            'organization_id' => null,
+
+        ]));
         Auth::login($user);
 
 
