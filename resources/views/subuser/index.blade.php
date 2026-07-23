@@ -25,6 +25,23 @@
       <h2>Manage Organization Users</h2>
     </div>
 
+    @if(session('success'))
+            <div style="color: green; margin-bottom: 15px;">
+                <strong>Success!</strong> {{ session('success') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div style="color: red; margin-bottom: 15px;">
+                <strong>Please fix the errors below:</strong>
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
     <!-- CREATE FORM -->
     <div>
       <div>
@@ -43,6 +60,10 @@
             <div>
               <input type="email" name="email" placeholder="Email Address" value="{{ old('email') }}" required>
             </div>
+            <div>
+                            
+                            <input type="text" name="password" placeholder="Enter Password" id="password" required>
+                        </div>
             <div>
               <button type="submit">Create User</button>
             </div>
@@ -73,6 +94,7 @@
               <td>{{ $user->firstname }}</td>
               <td>{{ $user->secondname }}</td>
               <td>{{ $user->email }}</td>
+              <td> $user->password</td>
               <td>
                 @if($user->is_active)
                 <span>Active</span>

@@ -5,12 +5,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\SubuserController;
+use App\Http\Controllers\SubuserDashboardController;
+use Illuminate\Support\Facades\Auth;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 Route::get('/', function() { 
-    return view('login'); 
+    return view('components.login'); 
 });
 // Public
 // Route::get('/', function () {
@@ -20,7 +22,7 @@ Route::get('/', function() {
 // Auth
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
-Route::get('/', [LogController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LogController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LogController::class, 'login']);
 Route::post('/logout', function () {
     Auth::logout();
@@ -42,13 +44,14 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 // Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth','superuser'])->name('dashboard');
 
 // Superuser only: manage subusers
-Route::middleware(['auth', 'verified', 'superuser'])->group(function () {
+Route::middleware(['auth',  'superuser'])->group(function () {
     Route::resource('subuser', SubuserController::class)->except(['destroy']);
     Route::patch('/subuser/{subuser}/activate', [SubuserController::class, 'activate'])
         ->name('subuser.activate');
     Route::delete('/subuser/{subuser}', [SubuserController::class, 'destroy'])
         ->name('subuser.destroy');
 });
+Route::get('subuser-dashboard', [SubuserDashboardController::class, 'index'])->middleware(['auth'])->name('subuser.dashboard');

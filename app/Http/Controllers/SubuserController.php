@@ -29,25 +29,25 @@ class SubuserController extends Controller
             'firstname' => 'required|string|max:255',
             'secondname' => 'required|string|max:255',
             'email' => 'required|email|unique:newusers|max:255',
+            'password'   => 'required|string|min:4|max:255',
         ]);
 
-        $tempPassword = Str::random(12);
+        // $tempPassword = Str::random(12);
 
         Newuser::create([
             'firstname' => $validated['firstname'],
             'secondname' => $validated['secondname'],
             'email' => $validated['email'],
-            'password' => Hash::make($tempPassword),
+            'password' => Hash::make($validated['password']),
             'role' => 'subuser',
             'is_active' => false,
             'organization_id' => auth()->id(),
         ]);
 
-        // TODO: Email temp password via Mailtrap
-        // Mail::to($validated['email'])->send(...);
+        
 
         return redirect()->route('subuser.index')
-            ->with('success', 'User created. Temporary password: ' . $tempPassword);
+            ->with('success', 'User created. Temporary password: ' );
     }
 
     public function show(Newuser $subuser)
