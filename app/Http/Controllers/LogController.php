@@ -38,7 +38,7 @@ class LogController extends Controller
             
             if($user->isSuperuser()){
 
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard.index');
             } else{
                 return redirect()->route('subuser.dashboard');
             }

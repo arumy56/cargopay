@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 // });
 Route::get('/', function () {
     return view('components.login');
+});
 
 // Public
 // Route::get('/', function () {
@@ -45,8 +46,8 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 // Dashboard
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth','superuser'])->name('dashboard');
+    return view('dashboard.index');
+})->middleware(['auth','superuser'])->name('dashboard.index');
 
 // Superuser only: manage subusers
 Route::middleware(['auth',  'superuser'])->group(function () {
