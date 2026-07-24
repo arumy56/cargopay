@@ -1,19 +1,19 @@
 <?php
 
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\SubuserController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubuserDashboardController;
 use Illuminate\Support\Facades\Auth;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', function() { 
-    return view('components.login'); 
-});
+Route::get('/', function () {
+    return view('components.login');
+
 // Public
 // Route::get('/', function () {
 //     return view('home');
@@ -28,6 +28,7 @@ Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
+
     return redirect('/');
 })->name('logout');
 
@@ -38,6 +39,7 @@ Route::get('/email/verify', function () {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
+
     return redirect('/dashboard');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
