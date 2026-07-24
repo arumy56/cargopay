@@ -5,13 +5,15 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\SubuserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SubuserDashboardController;
+use Illuminate\Support\Facades\Auth;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 Route::get('/', function () {
     return view('components.login');
-});
+
 // Public
 // Route::get('/', function () {
 //     return view('home');
@@ -43,8 +45,8 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 // Dashboard
 Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->middleware(['auth'])->name('dashboard');
+    return view('dashboard');
+})->middleware(['auth','superuser'])->name('dashboard');
 
 // Superuser only: manage subusers
 Route::middleware(['auth',  'superuser'])->group(function () {
@@ -54,3 +56,4 @@ Route::middleware(['auth',  'superuser'])->group(function () {
     Route::delete('/subuser/{subuser}', [SubuserController::class, 'destroy'])
         ->name('subuser.destroy');
 });
+Route::get('subuser-dashboard', [SubuserDashboardController::class, 'index'])->middleware(['auth'])->name('subuser.dashboard');

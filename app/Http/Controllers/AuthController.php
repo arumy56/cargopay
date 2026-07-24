@@ -24,7 +24,9 @@ class AuthController extends Controller
             'firstname' => 'required|string|max:255',
             'secondname' => 'required|string|max:255',
             'email' => 'required|string|unique:newusers|max:255',
-            'password' => ['required', 'confirmed', Password::min(8)->symbols()],
+
+            'password'=> ['required','confirmed', Password::min(8)->symbols()->mixedCase()->numbers()] ,
+
 
         ]);
 
@@ -43,6 +45,8 @@ class AuthController extends Controller
         return redirect('/dashboard')->with('success', 'account created successfully');
 
         return redirect('/email/verify')->with('sucess', 'check ur email to verify ur account we sent a link');
+        //  return redirect('/email/verify')->with('sucess', 'check ur email to verify ur account we sent a link');
+        
 
     }
 }

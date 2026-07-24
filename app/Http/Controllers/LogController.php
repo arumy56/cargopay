@@ -24,9 +24,25 @@ class LogController extends Controller
         ]);
  
         if (Auth::attempt($credentials)) {
+             $user = auth()->user();
+            if (!$user->is_active) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()->withErrors([
+                    'email' => 'Your account is inactive. Please contact your organization administrator.',
+                ])->onlyInput('email');
+            }
             $request->session()->regenerate();
+            
+            if($user->isSuperuser()){
+
+                return redirect()->route('dashboard');
+            } else{
+                return redirect()->route('subuser.dashboard');
+            }
  
-            return redirect()->intended('dashboard');
         }
  
         return back()->withErrors([
