@@ -6,7 +6,7 @@
       <ul>
         @if($user->isSuperuser())
           <li>
-            <a href="{{ route('dashboard') }}">📊 Main Dashboard</a>
+            <a href="{{ route('dashboard.index') }}">📊 Main Dashboard</a>
           </li>
         @endif
         <li>
