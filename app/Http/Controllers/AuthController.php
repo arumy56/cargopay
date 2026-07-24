@@ -24,7 +24,7 @@ class AuthController extends Controller
             'firstname'=> 'required|string|max:255',
             'secondname' => 'required|string|max:255',
             'email' => 'required|string|unique:newusers|max:255',
-            'password'=> ['required','confirmed', Password::min(8)->symbols()] ,
+            'password'=> ['required','confirmed', Password::min(8)->symbols()->mixedCase()->numbers()] ,
             
 
         ]);

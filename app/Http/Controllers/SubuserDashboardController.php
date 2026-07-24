@@ -9,8 +9,8 @@ class SubuserDashboardController extends Controller
 {
     //
     public function index(){
-        $subuser=Auth::user();
-        $organization= $subuser->organization;
-        return view('subuser.dashboard', compact('subuser', 'organization'));
+        $user=Auth::user();
+        $organization= $user->organization;
+        return view('subuser.dashboard', compact('user', 'organization'));
     }
 }
