@@ -24,7 +24,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ url('/login') }}" class="login-form">
+                <form method="POST" action="{{ route('login') }}" class="login-form">
                     @csrf
 
                     <div class="field-group">
