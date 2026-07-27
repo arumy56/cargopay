@@ -26,8 +26,8 @@ class SubuserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'secondname' => 'required|string|max:255',
+            'firstname' => 'required|string|min:4|max:255',
+            'secondname' => 'required|string|min:4|max:255',
             'email' => 'required|email|unique:newusers|max:255',
             'password'   => 'required|string|min:4|max:255',
         ]);

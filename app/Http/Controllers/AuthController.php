@@ -44,7 +44,7 @@ class AuthController extends Controller
 
         return redirect('/dashboard')->with('success', 'account created successfully');
 
-        return redirect('/email/verify')->with('sucess', 'check ur email to verify ur account we sent a link');
+        // return redirect('/email/verify')->with('sucess', 'check ur email to verify ur account we sent a link');
         //  return redirect('/email/verify')->with('sucess', 'check ur email to verify ur account we sent a link');
         
 

@@ -2,15 +2,15 @@
   <!-- Sidebar -->
   <nav id="sidebar">
     <div>
-      <h5>🚢 Kargo Pay</h5>
+      <h5> Kargo Pay</h5>
       <ul>
         @if($user->isSuperuser())
           <li>
-            <a href="{{ route('dashboard.index') }}">📊 Main Dashboard</a>
+            <a href="{{ route('dashboard.index') }}"> Main Dashboard</a>
           </li>
         @endif
         <li>
-          <a href="{{ route('subuser.dashboard') }}">📊 My Dashboard</a>
+          <a href="{{ route('subuser.dashboard') }}"> My Dashboard</a>
         </li>
       </ul>
       <hr>

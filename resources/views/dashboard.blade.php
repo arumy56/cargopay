@@ -2,12 +2,12 @@
   <!-- Sidebar Navigation Column -->
   <nav id="sidebar">
     <div>
-      <h5>🚢 Kargo Pay</h5>
+      <h5> Kargo Pay</h5>
       
       @if(auth()->user()->isSuperuser())
     <li class="nav-item">
         <a class="nav-link text-dark rounded px-3 py-2" href="{{ route('subuser.index') }}">
-            👥 Manage Users
+             Manage Users
         </a>
     </li>
 @endif 
@@ -26,7 +26,7 @@
     <!-- Welcome Section Header -->
     <div>
       <div>
-        <h1>Welcome back, {{ Auth::user()->firstname }}! 👋</h1>
+        <h1>Welcome back, {{ Auth::user()->firstname }}! </h1>
         <p>Here is what is happening with Kargo Pay today.</p>
       </div>
     </div>
