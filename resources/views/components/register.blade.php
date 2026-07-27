@@ -65,7 +65,7 @@
                     </div>
                     <label class="terms-check">
                         <input type="checkbox" required>
-                        <span>I accept the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.</span>
+                        <span>I accept the <a href="{{ route('terms') }}">Terms and Conditions</a> and <a href="{{ route('privacy') }}">Privacy Policy</a>.</span>
                     </label>
                     <button class="registration-submit" type="submit">Create account <span aria-hidden="true">&rarr;</span></button>
                 </form>

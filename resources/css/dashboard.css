@@ -16,3 +16,31 @@
 @media (max-width: 1200px) { .dashboard-shell { grid-template-columns: 280px minmax(0, 1fr); }.sidebar-header { padding-inline: 1.25rem; }.dashboard-brand { font-size: 1.75rem; }.stat-card { padding: 1.2rem; } }
 @media (max-width: 760px) { .dashboard-shell { display: block; }.dashboard-sidebar { position: fixed; inset: 0 auto 0 0; width: 280px; box-shadow: 10px 0 30px rgb(8 37 70 / 14%); transform: translateX(-100%); }.dashboard-sidebar.is-collapsed { transform: translateX(0); }.dashboard-topbar { min-height: 74px; padding-block: 1rem; }.mobile-menu { display: grid; }.sidebar-toggle { display: none; }.topbar-actions { gap: .35rem; }.topbar-actions .icon-button { width: 34px; height: 34px; }.logout-button { min-height: 36px; padding: 0 .65rem; font-size: .85rem; }.notifications-menu { top: 62px; right: 1rem; }.quick-links { width: 100%; }.dashboard-footer { text-align: center; font-size: .8rem; } }
 @media (max-width: 420px) { .dashboard-content { padding-inline: 1rem; }.topbar-actions .help-button, .topbar-actions [data-fullscreen] { display: none; }.welcome-banner { min-height: 300px; }.welcome-banner > div { padding: 1.25rem; }.welcome-banner h1 { font-size: 2rem; }.dashboard-brand { font-size: 1.55rem; } }
+
+@media (min-width: 761px) {
+    .dashboard-page, .dashboard-main { overflow: hidden; }
+    .dashboard-shell { height: 100svh; min-height: 100svh; grid-template-columns: 280px minmax(0, 1fr); }
+    .sidebar-header { height: 76px; padding-inline: 1.5rem; }
+    .dashboard-brand { font-size: 1.7rem; }
+    .account-summary { padding: .8rem 1.25rem 1rem; }
+    .account-summary img { width: 72px; height: 72px; }
+    .dashboard-topbar { min-height: 76px; padding: 1rem clamp(1.25rem, 2.5vw, 2rem); }
+    .topbar-actions { gap: .65rem; }
+    .logout-button { min-height: 38px; padding-inline: .85rem; font-size: .82rem; }
+    .dashboard-content { padding: .7rem clamp(1.25rem, 2.5vw, 2rem) 1rem; }
+    .breadcrumbs { padding-bottom: .6rem; font-size: .8rem; }
+    .welcome-banner { min-height: 205px; }
+    .welcome-banner-content { padding: 1rem; }
+    .welcome-avatar { width: 72px; height: 72px; margin-top: -1.35rem; border-width: 4px; font-size: 2rem; }
+    .welcome-banner p { margin-bottom: .35rem; font-size: .67rem; }
+    .welcome-banner h1 { font-size: clamp(1.5rem, 2.7vw, 2.4rem); }
+    .welcome-banner-content > span { margin-top: .3rem; font-size: .85rem; }
+    .welcome-banner button { min-width: 190px; margin-top: .75rem; padding: .55rem 1rem; font-size: .8rem; }
+    .stat-grid { margin-top: .8rem; }
+    .stat-card { min-height: 100px; padding: 1rem 1.1rem; }
+    .stat-card span { font-size: .66rem; }
+    .stat-card strong { font-size: 1.55rem; }
+    .stat-card small { margin-top: .3rem; font-size: .75rem; }
+    .biller-card strong { font-size: clamp(1.1rem, 1.8vw, 1.55rem); }
+    .dashboard-footer { padding: .65rem clamp(1.25rem, 2.5vw, 2rem); font-size: .75rem; }
+}
