@@ -23,6 +23,8 @@ Route::get('/', function () {
 // Auth
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
+Route::view('/terms-and-conditions', 'legal.terms')->name('terms');
+Route::view('/privacy-policy', 'legal.privacy')->name('privacy');
 Route::get('/login', [LogController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LogController::class, 'login']);
 Route::post('/logout', function () {

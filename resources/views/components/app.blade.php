@@ -1,3 +1,5 @@
+@props(['isDashboard' => null, 'styles' => [], 'title' => null])
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
 
     <title>{{ $title ?? 'KargoPay' }}</title>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(array_merge(['resources/css/app.css'], $styles, ['resources/js/app.js']))
 </head>
 
 <body class="bg-light min-vh-100 d-flex flex-column">

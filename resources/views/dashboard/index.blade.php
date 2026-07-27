@@ -14,8 +14,6 @@
         </div>
 
         @include('partials.cards')
-
-        @include('partials.quick-links')
     </main>
 @endsection
 
