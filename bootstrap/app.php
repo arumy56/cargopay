@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Middleware\CheckIfActive;
+use App\Http\Middleware\EnsureBillerSetup;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,6 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
         //
          $middleware->alias([
             'superuser' => \App\Http\Middleware\CheckRole::class,
+            'active' => \App\Http\Middleware\CheckIfActive::class,
+            'biller' => \App\Http\Middleware\EnsureBillerSetup::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

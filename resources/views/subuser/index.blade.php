@@ -22,19 +22,22 @@
             </header>
 
             @if (session('success'))
-                <div class="subuser-management__alert subuser-management__alert--success" role="status"><strong>Success.</strong> {{ session('success') }}</div>
+            <div class="subuser-management__alert subuser-management__alert--success" role="status"><strong>Success.</strong> {{ session('success') }}</div>
             @endif
 
             @if ($errors->any())
-                <div class="subuser-management__alert subuser-management__alert--error" role="alert">
-                    <strong>Please fix the errors below.</strong>
-                    <ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
-                </div>
+            <div class="subuser-management__alert subuser-management__alert--error" role="alert">
+                <strong>Please fix the errors below.</strong>
+                <ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+            </div>
             @endif
 
             <section class="subuser-management__panel" aria-labelledby="create-user-title">
                 <div class="subuser-management__panel-heading">
-                    <div><p class="subuser-management__eyebrow">New member</p><h2 id="create-user-title">Create a user</h2></div>
+                    <div>
+                        <p class="subuser-management__eyebrow">New member</p>
+                        <h2 id="create-user-title">Create a user</h2>
+                    </div>
                 </div>
                 <form class="subuser-management__form" action="{{ route('subuser.store') }}" method="POST">
                     @csrf
@@ -48,27 +51,59 @@
 
             <section class="subuser-management__panel" aria-labelledby="users-title">
                 <div class="subuser-management__panel-heading">
-                    <div><p class="subuser-management__eyebrow">Directory</p><h2 id="users-title">All users</h2></div>
+                    <div>
+                        <p class="subuser-management__eyebrow">Directory</p>
+                        <h2 id="users-title">All users</h2>
+                    </div>
                     <span>{{ $subuser->count() }} {{ $subuser->count() === 1 ? 'member' : 'members' }}</span>
                 </div>
                 <div class="subuser-management__table-wrap">
                     <table>
-                        <thead><tr><th>First name</th><th>Last name</th><th>Email</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th><span class="visually-hidden">Actions</span></th>
+                            </tr>
+                        </thead>
                         <tbody>
                             @forelse ($subuser as $user)
-                                <tr>
-                                    <td>{{ $user->firstname }}</td><td>{{ $user->secondname }}</td><td>{{ $user->email }}</td>
-                                    <td><span class="subuser-management__badge {{ $user->is_active ? 'is-active' : 'is-inactive' }}">{{ $user->is_active ? 'Active' : 'Inactive' }}</span></td>
-                                    <td class="subuser-management__action">
-                                        @if (! $user->is_active)
-                                            <form action="{{ route('subuser.activate', $user) }}" method="POST">@csrf @method('PATCH')<button type="submit">Activate</button></form>
-                                        @else
-                                            <form action="{{ route('subuser.destroy', $user) }}" method="POST" onsubmit="return confirm('Deactivate this user?');">@csrf @method('DELETE')<button type="submit">Deactivate</button></form>
-                                        @endif
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>{{ $user->firstname }}</td>
+                                <td>{{ $user->secondname }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td><span class="subuser-management__badge {{ $user->is_active ? 'is-active' : 'is-inactive' }}">{{ $user->is_active ? 'Active' : 'Inactive' }}</span></td>
+                                <td class="subuser-management__action">
+                                    @if (! $user->is_active)
+                                    <form action="{{ route('subuser.activate', $user) }}" method="POST" onsubmit="return confirm('Activate this user?');">@csrf @method('PATCH')<button type="submit">Activate</button></form>
+                                    @else
+                                    <form action="{{ route('subuser.destroy', $user) }}" method="POST" onsubmit="return confirm('Deactivate this user?');">@csrf @method('DELETE')<button type="submit">Deactivate</button></form>
+                                    @endif
+                                </td>
+                                <td>
+                                    <form action="{{ route('subuser.reset-password', $user) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to reset this user\'s password?');">
+                                        @csrf
+                                        <div class="input-group input-group-sm">
+                                            <input type="password" name="password" class="form-control form-control-sm" placeholder="New Password" required minlength="8">
+                                            <button type="submit" class="btn btn-sm btn-warning" title="Reset Password"> Reset Password</button>
+                                        </div>
+                                    </form>
+
+                                </td>
+                                <td>
+                                     @if($user->is_active)
+        <a href="{{ route('subuser.organization') }}" class="btn btn-sm btn-outline-primary">
+            🏷️ Role
+        </a>
+    @endif
+                                </td>
+                            </tr>
                             @empty
-                                <tr><td colspan="5" class="subuser-management__empty">No users found. Create your first organization user above.</td></tr>
+                            <tr>
+                                <td colspan="5" class="subuser-management__empty">No users found. Create your first organization user above.</td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>

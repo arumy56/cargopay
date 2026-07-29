@@ -40,7 +40,7 @@ class AuthController extends Controller
         ]));
         Auth::login($user);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
         return redirect('/dashboard')->with('success', 'account created successfully');
 

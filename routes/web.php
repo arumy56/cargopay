@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BillerController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\SubuserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -15,10 +16,7 @@ Route::get('/', function () {
     return view('components.login');
 });
 
-// Public
-// Route::get('/', function () {
-//     return view('home');
-// });
+
 
 // Auth
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
@@ -49,14 +47,31 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 // Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard.index');
-})->middleware(['auth','superuser'])->name('dashboard.index');
+})->middleware(['auth','superuser',  'active'])->name('dashboard.index');
+
+
+
 
 // Superuser only: manage subusers
-Route::middleware(['auth',  'superuser'])->group(function () {
+Route::middleware(['auth',  'active',  'superuser'])->group(function () {
     Route::resource('subuser', SubuserController::class)->except(['destroy']);
     Route::patch('/subuser/{subuser}/activate', [SubuserController::class, 'activate'])
         ->name('subuser.activate');
     Route::delete('/subuser/{subuser}', [SubuserController::class, 'destroy'])
         ->name('subuser.destroy');
+     Route::post('/subuser/{subuser}/reset-password', [SubuserController::class, 'resetPassword'])
+        ->name('subuser.reset-password');    
 });
-Route::get('subuser-dashboard', [SubuserDashboardController::class, 'index'])->middleware(['auth'])->name('subuser.dashboard');
+Route::get('subuser-dashboard', [SubuserDashboardController::class, 'index'])->middleware(['auth',  'active'])->name('subuser.dashboard');
+
+
+Route::middleware(['auth', 'superuser'])->group(function () {
+    // Biller Routes
+    Route::get('/biller/create', [BillerController::class, 'create'])->name('biller.create');
+    Route::post('/biller/store', [BillerController::class, 'store'])->name('biller.store');
+
+    // Manage Organization (Role Assignment) Routes
+   // Inside your auth middleware group
+Route::get('/organization/roles', [SubuserController::class, 'manageRoles'])->name('subuser.organization');
+Route::put('/organization/roles/{id}', [SubuserController::class, 'updateRole'])->name('subuser.updateRole');
+});
