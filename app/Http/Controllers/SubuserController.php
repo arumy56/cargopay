@@ -32,7 +32,7 @@ class SubuserController extends Controller
             'password'   => 'required|string|min:4|max:255',
         ]);
 
-        // $tempPassword = Str::random(12);
+        $tempPassword =  $validated['password'];
 
         Newuser::create([
             'firstname' => $validated['firstname'],
@@ -47,7 +47,7 @@ class SubuserController extends Controller
         
 
         return redirect()->route('subuser.index')
-            ->with('success', 'User created. Temporary password: ' );
+            ->with('success', 'User created. Temporary password: ' )->with('temp_password', $tempPassword);;
     }
 
     public function show(Newuser $subuser)
@@ -97,12 +97,62 @@ class SubuserController extends Controller
         return redirect()->route('subuser.index')
             ->with('success', 'User deactivated.');
     }
+  
 
-    // Helper: prevent superusers from managing other superusers' subusers
+    public function resetPassword(Request $request, Newuser $subuser) {
+    if ($subuser->role !== 'subuser' || $subuser->organization_id !== auth()->id()) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    $validated = $request->validate([
+        'password' => ['required', 'string', 'min:8'],
+    ]);
+
+    $subuser->update([
+        'password' => Hash::make($validated['password']),
+    ]);
+
+    return redirect()->route('subuser.index')->with('success', 'Password reset successfully!');
+}
+
+// Display the "Manage Organization" role assignment page
+public function manageRoles()
+{
+    // Get all users belonging to the logged-in admin's organization
+    $users = Newuser::where('organization_id', auth()->id()) ->where('is_active', true)  // Only show active users for role assignment
+    ->get();
+    return view('subuser.organization', compact('users'));
+}
+
+// Process the role update
+public function updateRole(Request $request, $id)
+{
+    $user = Newuser::findOrFail($id);
+    
+    // Security check: ensure admin is only updating their own employees
+    if ($user->organization_id !== auth()->id()) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    $validated = $request->validate([
+        // nullable allows them to leave it blank (No Role)
+        'role' => 'nullable|in:finance,clearance,operations,manager', 
+    ]);
+
+    // $user->role = $validated['role']; // Will be null if blank is selected
+    // $user->save();
+     $user->update(['role' => $validated['role']]);
+
+    return redirect()->route('subuser.organization')->with('success', 'Role updated successfully.');
+}
+
+// Helper: prevent superusers from managing other superusers' subusers
     private function authorizeOwnership(Newuser $subuser)
     {
         if ($subuser->organization_id !== auth()->id()) {
             abort(403, 'This user does not belong to your organization.');
         }
     }
+
+
 }

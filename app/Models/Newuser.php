@@ -34,7 +34,13 @@ class Newuser extends Authenticatable implements MustVerifyEmail
 
     public function isSubuser():bool
     {
-        return $this->role == 'subuser';
+        // return $this->role == 'subuser';
+        return $this->organization_id !== null;
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
     }
 
     public function organization()
@@ -50,5 +56,10 @@ class Newuser extends Authenticatable implements MustVerifyEmail
     public function fullName(): string
 {
     return $this->firstname . ' ' . $this->secondname;
+}
+
+public function billerAccount()
+{
+    return $this->hasOne(BillerAccount::class, 'user_id');
 }
 }

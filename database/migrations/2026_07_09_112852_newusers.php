@@ -12,18 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         //
-        Schema::create('newusers', function(Blueprint $table){
+        Schema::create('newusers', function (Blueprint $table) {
             $table->id();
             $table->string('firstname');
             $table->string('secondname');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable(); 
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('subuser');
+            // $table->string('role')->nullable()->change();
             $table->boolean('is_active')->default('false');
             $table->foreignId('organization_id')->nullable()->constrained('newusers');
             $table->timestamps();
-
         });
     }
 
@@ -33,7 +33,7 @@ return new class extends Migration
     public function down(): void
     {
         //
-        
+
         Schema::dropIfExists('newusers');
     }
 };
