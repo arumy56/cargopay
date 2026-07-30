@@ -4,5 +4,90 @@
 .subuser-management__panel { margin-top: 1rem; padding: clamp(1.25rem, 2.5vw, 1.75rem); border: 1px solid #e2ebf4; border-radius: 1rem; background: #fff; box-shadow: 0 10px 25px rgb(20 55 91 / 6%); }.subuser-management__panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.35rem; }.subuser-management__panel-heading h2 { font-size: 1.35rem; }.subuser-management__panel-heading > span { padding: .4rem .7rem; border-radius: 999px; color: #37628a; background: #eef5fb; font-size: .8rem; font-weight: 800; }
 .subuser-management__form { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) auto; align-items: end; gap: 1rem; }.subuser-management__form label { display: grid; gap: .45rem; color: #425f7e; font-size: .82rem; font-weight: 800; }.subuser-management__form input { min-width: 0; height: 2.75rem; padding: 0 .8rem; border: 1px solid #d7e3ef; border-radius: .55rem; color: #18324f; background: #fbfdff; font: inherit; }.subuser-management__form input:focus { outline: 3px solid rgb(67 139 229 / 18%); border-color: #438be5; }.subuser-management__form button, .subuser-management__action button { min-height: 2.75rem; padding: 0 1rem; border: 0; border-radius: .55rem; color: #fff; background: #1674cb; cursor: pointer; font: inherit; font-weight: 800; white-space: nowrap; }.subuser-management__form button:hover, .subuser-management__action button:hover { background: #095b9f; }
 .subuser-management__table-wrap { overflow-x: auto; }.subuser-management table { width: 100%; border-collapse: collapse; }.subuser-management th, .subuser-management td { padding: .9rem .7rem; border-bottom: 1px solid #e8eff6; text-align: left; white-space: nowrap; }.subuser-management th { color: #71869b; font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; }.subuser-management td { color: #284763; }.subuser-management tbody tr:last-child td { border-bottom: 0; }.subuser-management__badge { display: inline-block; padding: .3rem .55rem; border-radius: 999px; font-size: .75rem; font-weight: 800; }.subuser-management__badge.is-active { color: #15723d; background: #dff5e7; }.subuser-management__badge.is-inactive { color: #8e5f0f; background: #fff3d8; }.subuser-management__action { text-align: right; }.subuser-management__action button { min-height: 2.25rem; background: #edf5ff; color: #1769b9; }.subuser-management__action button:hover { color: #fff; background: #1769b9; }.subuser-management__empty { padding: 2rem; color: #71869b; text-align: center; white-space: normal; }
+/* ===========================
+   Confirmation Modal
+=========================== */
+
+.confirm-modal{
+    position:fixed;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(4px);
+    z-index:9999;
+}
+
+.confirm-modal.show{
+    display:flex;
+}
+
+.confirm-box{
+    width:min(420px,90%);
+    background:#fff;
+    border-radius:16px;
+    padding:28px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+    animation:popup .25s ease;
+}
+
+@keyframes popup{
+    from{
+        transform:translateY(-15px) scale(.95);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0) scale(1);
+        opacity:1;
+    }
+}
+
+.confirm-title{
+    margin:0;
+    color:#102b4a;
+    font-size:1.35rem;
+    font-weight:800;
+}
+
+.confirm-message{
+    margin:15px 0 25px;
+    color:#647a92;
+    line-height:1.6;
+}
+
+.confirm-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+}
+
+.confirm-cancel,
+.confirm-confirm{
+    border:none;
+    border-radius:8px;
+    padding:10px 22px;
+    cursor:pointer;
+    font-weight:700;
+    transition:.2s;
+}
+
+.confirm-cancel{
+    background:#eef2f7;
+    color:#18324f;
+}
+
+.confirm-cancel:hover{
+    background:#dce6f1;
+}
+
+.confirm-confirm{
+    background:#d32f2f;
+    color:#fff;
+}
+
+.confirm-confirm:hover{
+    background:#b71c1c;
+}
 @media (max-width: 1100px) { .subuser-management__form { grid-template-columns: repeat(2, minmax(0, 1fr)); }.subuser-management__form button { width: max-content; } } @media (max-width: 800px) { .subuser-management { grid-template-columns: 1fr; }.subuser-management__sidebar { min-height: auto; padding: 1.25rem; }.subuser-management__navigation { display: flex; margin-top: 1.25rem; }.subuser-management__logout { position: absolute; top: 1.1rem; right: 1.25rem; }.subuser-management__logout button { width: auto; }.subuser-management__content { padding: 1.5rem; } } @media (max-width: 560px) { .subuser-management__content { padding: 1.25rem 1rem; }.subuser-management__form { grid-template-columns: 1fr; }.subuser-management__form button { width: 100%; }.subuser-management__panel { padding: 1.2rem 1rem; } }
 @media (min-width: 801px) { .subuser-management { height: 100svh; min-height: 100svh; overflow: hidden; font-size: .86rem; }.subuser-management__sidebar { padding: 1.4rem 1rem 1rem; }.subuser-management__brand { font-size: 1.45rem; }.subuser-management__navigation { margin-top: 1.75rem; }.subuser-management__navigation a { padding: .65rem .75rem; }.subuser-management__content { height: 100svh; padding: clamp(1rem, 2.5vw, 2rem); overflow: hidden; }.subuser-management__header { margin-bottom: 1rem; }.subuser-management__header h1 { font-size: clamp(1.55rem, 3vw, 2.25rem); }.subuser-management__header p:not(.subuser-management__eyebrow) { margin-top: .35rem; font-size: .86rem; }.subuser-management__panel { margin-top: .7rem; padding: 1rem 1.15rem; }.subuser-management__panel-heading { margin-bottom: .85rem; }.subuser-management__panel-heading h2 { font-size: 1.15rem; }.subuser-management__form { gap: .7rem; }.subuser-management__form label { gap: .3rem; font-size: .75rem; }.subuser-management__form input { height: 2.3rem; font-size: .85rem; }.subuser-management__form button { min-height: 2.3rem; font-size: .82rem; }.subuser-management__table-wrap { max-height: calc(100svh - 380px); overflow-y: auto; }.subuser-management th, .subuser-management td { padding: .65rem .55rem; font-size: .8rem; }.subuser-management__action button { min-height: 2rem; font-size: .78rem; } }
