@@ -8,12 +8,13 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-                
+                'resources/css/dashboard.css',
                 'resources/css/login.css',
                 'resources/css/registration.css',
                 'resources/css/subuser.dashboard.css',
                 'resources/css/subuser.index.css',
                 'resources/js/app.js',
+                'resources/js/dashboard.js',
                 
             ],
             refresh: true,
