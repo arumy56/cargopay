@@ -62,4 +62,21 @@ public function billerAccount()
 {
     return $this->hasOne(BillerAccount::class, 'user_id');
 }
+
+public function wallets()
+{
+    return $this->hasMany(Wallet::class, 'user_id');
+}
+
+public function kesWallet()
+{
+    return $this->hasOne(Wallet::class, 'user_id')->where('currency', 'KES');
+}
+
+public function usdWallet()
+{
+    return $this->hasOne(Wallet::class, 'user_id')->where('currency', 'USD');
+}
+
+
 }

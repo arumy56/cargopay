@@ -1,4 +1,4 @@
-<x-app :isDashboard="true" title="Manage Users - Kargo Pay" :styles="['resources/css/subuser.index.css']">
+<x-app :isDashboard="true" title="Manage Users - Kargo Pay" :styles="['resources/css/subuser_index.css']">
     <div class="subuser-management">
         <aside class="subuser-management__sidebar">
             <a class="subuser-management__brand" href="{{ route('dashboard.index') }}">Kargo<span>Pay</span></a>

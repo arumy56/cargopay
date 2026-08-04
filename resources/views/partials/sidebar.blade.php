@@ -25,5 +25,9 @@
         <!-- <button class="nav-link" type="button" data-dialog-open="organization-dialog"><span>▤</span> My Organization</button> -->
         <button class="nav-link" type="button" data-dialog-open="biller-dialog"><span>▣</span> Bills</button>
         <button class="nav-link" type="button" data-dialog-open="profile-dialog"><span>◉</span> My Profile</button>
+
+        <a class="nav-link {{ request()->routeIs('wallets.index') ? 'is-active' : '' }}" href="{{ route('wallets.index') }}">
+    <span>💰</span> Wallets
+</a>
     </nav>
 </aside>

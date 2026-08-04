@@ -3,10 +3,12 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BillerController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\MpesaController;
 use App\Http\Controllers\SubuserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubuserDashboardController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Auth;
 
 // Route::get('/', function () {
@@ -47,7 +49,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 // Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard.index');
-})->middleware(['auth','superuser',  'active'])->name('dashboard.index');
+})->middleware(['auth', 'superuser',  'active'])->name('dashboard.index');
 
 
 
@@ -59,8 +61,14 @@ Route::middleware(['auth',  'active',  'superuser'])->group(function () {
         ->name('subuser.activate');
     Route::delete('/subuser/{subuser}', [SubuserController::class, 'destroy'])
         ->name('subuser.destroy');
-     Route::post('/subuser/{subuser}/reset-password', [SubuserController::class, 'resetPassword'])
-        ->name('subuser.reset-password');    
+    Route::post('/subuser/{subuser}/reset-password', [SubuserController::class, 'resetPassword'])
+        ->name('subuser.reset-password');
+
+    Route::get('/wallets', [WalletController::class, 'index'])->name('wallets.index');
+    Route::post('/wallets', [WalletController::class, 'store'])->name('wallets.store');
+    Route::put('/wallets/{wallet}', [WalletController::class, 'update'])->name('wallets.update');
+    Route::patch('/wallets/{wallet}/toggle', [WalletController::class, 'toggle'])->name('wallets.toggle');
+
 });
 Route::get('subuser-dashboard', [SubuserDashboardController::class, 'index'])->middleware(['auth',  'active'])->name('subuser.dashboard');
 
@@ -71,7 +79,20 @@ Route::middleware(['auth', 'superuser'])->group(function () {
     Route::post('/biller/store', [BillerController::class, 'store'])->name('biller.store');
 
     // Manage Organization (Role Assignment) Routes
-   // Inside your auth middleware group
-Route::get('/organization/roles', [SubuserController::class, 'manageRoles'])->name('subuser.organization');
-Route::put('/organization/roles/{id}', [SubuserController::class, 'updateRole'])->name('subuser.updateRole');
+    // Inside your auth middleware group
+    Route::get('/organization/roles', [SubuserController::class, 'manageRoles'])->name('subuser.organization');
+    Route::put('/organization/roles/{id}', [SubuserController::class, 'updateRole'])->name('subuser.updateRole');
 });
+
+
+
+// M-Pesa Routes (Protected: Only logged-in users can initiate)
+Route::middleware(['auth', 'active'])->group(function () {
+    Route::post('/mpesa/stk-push', [App\Http\Controllers\MpesaController::class, 'stkPush'])->name('mpesa.stk-push');
+});
+
+// Callback route MUST be public (Safaricom doesn't have your login cookies)
+Route::post('/api/mpesa/callback', [App\Http\Controllers\MpesaController::class, 'callback'])->name('mpesa.callback');
+// Route::post('/mpesa/test-stk', [MpesaController::class, 'testStk'])->middleware('auth');
+
+Route::get('/mpesa/check-status/{transaction}', [MpesaController::class, 'checkStatus'])->middleware('auth');
