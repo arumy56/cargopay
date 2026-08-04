@@ -4,8 +4,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BillerController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\MpesaController;
+use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\SubuserController;
+use App\Http\Controllers\SubuserDashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubuserDashboardController;
 use App\Http\Controllers\WalletController;
@@ -17,8 +20,6 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('components.login');
 });
-
-
 
 // Auth
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
@@ -51,16 +52,24 @@ Route::get('/dashboard', function () {
     return view('dashboard.index');
 })->middleware(['auth', 'superuser',  'active'])->name('dashboard.index');
 
-
-
+Route::middleware(['auth', 'active', 'superuser'])->prefix('organization')->name('organization.')->group(function () {
+    Route::get('/', [OrganizationController::class, 'index'])->name('index');
+    Route::get('/users', [OrganizationController::class, 'users'])->name('users');
+    Route::get('/wallets', [OrganizationController::class, 'wallets'])->name('wallets');
+    Route::get('/biller-account', [BillerController::class, 'create'])->name('biller');
+    Route::get('/roles', [SubuserController::class, 'manageRoles'])->name('roles');
+});
 
 // Superuser only: manage subusers
-Route::middleware(['auth',  'active',  'superuser'])->group(function () {
+Route::middleware(['auth',  'active',  'superuser', 'biller'])->group(function () {
     Route::resource('subuser', SubuserController::class)->except(['destroy']);
     Route::patch('/subuser/{subuser}/activate', [SubuserController::class, 'activate'])
         ->name('subuser.activate');
     Route::delete('/subuser/{subuser}', [SubuserController::class, 'destroy'])
         ->name('subuser.destroy');
+    Route::post('/subuser/{subuser}/reset-password', [SubuserController::class, 'resetPassword'])
+        ->name('subuser.reset-password');
+    Route::put('/organization/roles/{id}', [SubuserController::class, 'updateRole'])->name('subuser.updateRole');
     Route::post('/subuser/{subuser}/reset-password', [SubuserController::class, 'resetPassword'])
         ->name('subuser.reset-password');
 
@@ -72,16 +81,15 @@ Route::middleware(['auth',  'active',  'superuser'])->group(function () {
 });
 Route::get('subuser-dashboard', [SubuserDashboardController::class, 'index'])->middleware(['auth',  'active'])->name('subuser.dashboard');
 
-
 Route::middleware(['auth', 'superuser'])->group(function () {
     // Biller Routes
     Route::get('/biller/create', [BillerController::class, 'create'])->name('biller.create');
     Route::post('/biller/store', [BillerController::class, 'store'])->name('biller.store');
 
     // Manage Organization (Role Assignment) Routes
-    // Inside your auth middleware group
-    Route::get('/organization/roles', [SubuserController::class, 'manageRoles'])->name('subuser.organization');
-    Route::put('/organization/roles/{id}', [SubuserController::class, 'updateRole'])->name('subuser.updateRole');
+   // Inside your auth middleware group
+Route::get('/organization/roles', [SubuserController::class, 'manageRoles'])->name('subuser.organization');
+Route::put('/organization/roles/{id}', [SubuserController::class, 'updateRole'])->name('subuser.updateRole');
 });
 
 

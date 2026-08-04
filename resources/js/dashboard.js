@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => sidebar?.classList.toggle('is-collapsed'));
     });
 
+    document.querySelectorAll('[data-nav-group]').forEach((button) => {
+        button.addEventListener('click', () => button.closest('.nav-group')?.classList.toggle('is-open'));
+    });
+
     document.querySelectorAll('[data-dialog-open]').forEach((button) => {
         button.addEventListener('click', () => document.querySelector(`#${button.dataset.dialogOpen}`)?.showModal());
     });
