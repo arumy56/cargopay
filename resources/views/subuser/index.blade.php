@@ -1,5 +1,4 @@
-<x-app :isDashboard="true" title="Manage Users - Kargo Pay" :styles="['resources/css/subuser_index.css']">
-    <div class="subuser-management">
+
 
 
 

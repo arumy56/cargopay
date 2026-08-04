@@ -10,9 +10,8 @@ use App\Http\Controllers\SubuserDashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SubuserDashboardController;
 use App\Http\Controllers\WalletController;
-use Illuminate\Support\Facades\Auth;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -70,8 +69,7 @@ Route::middleware(['auth',  'active',  'superuser', 'biller'])->group(function (
     Route::post('/subuser/{subuser}/reset-password', [SubuserController::class, 'resetPassword'])
         ->name('subuser.reset-password');
     Route::put('/organization/roles/{id}', [SubuserController::class, 'updateRole'])->name('subuser.updateRole');
-    Route::post('/subuser/{subuser}/reset-password', [SubuserController::class, 'resetPassword'])
-        ->name('subuser.reset-password');
+   
 
     Route::get('/wallets', [WalletController::class, 'index'])->name('wallets.index');
     Route::post('/wallets', [WalletController::class, 'store'])->name('wallets.store');
@@ -87,9 +85,7 @@ Route::middleware(['auth', 'superuser'])->group(function () {
     Route::post('/biller/store', [BillerController::class, 'store'])->name('biller.store');
 
     // Manage Organization (Role Assignment) Routes
-   // Inside your auth middleware group
-Route::get('/organization/roles', [SubuserController::class, 'manageRoles'])->name('subuser.organization');
-Route::put('/organization/roles/{id}', [SubuserController::class, 'updateRole'])->name('subuser.updateRole');
+  
 });
 
 
